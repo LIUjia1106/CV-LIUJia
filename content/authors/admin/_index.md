@@ -1,13 +1,13 @@
 ---
 # Display name
-title: 吳健雄
+title: 刘佳
 
 # Name pronunciation (optional)
-name_pronunciation: Chien Shiung Wu
+name_pronunciation: LIU Jia
 
 # Full name (for SEO)
-first_name: Shiung Wu
-last_name: Chien
+first_name: Liu
+last_name: Jia
 
 # Status emoji
 status:
@@ -52,8 +52,8 @@ interests:
   - Information Retrieval
 
 education:
-  - area: PhD Artificial Intelligence
-    institution: Stanford University
+  - area: PhD of Emerging Interdisciplinary Areas
+    institution: Hong Kong University of Science and Technology
     date_start: 2016-01-01
     date_end: 2020-12-31
     summary: |
