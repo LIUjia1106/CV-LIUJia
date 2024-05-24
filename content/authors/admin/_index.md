@@ -3,7 +3,7 @@
 title: 刘佳
 
 # Name pronunciation (optional)
-name_pronunciation: LIU Jia
+name_pronunciation: Liu Jia
 
 # Full name (for SEO)
 first_name: Liu
@@ -20,25 +20,25 @@ superuser: true
 highlight_name: true
 
 # Role/position/tagline
-role: Chief Scientist
+role: Ph.D.
 
 # Organizations/Affiliations to display in Biography blox
 organizations:
-  - name: OpenAI
-    url: https://openai.com/
+  - name: HKUST
+    url: https://hkust.edu.hk/
 
 # Social network links
 # Need to use another icon? Simply download the SVG icon to your `assets/media/icons/` folder.
 profiles:
   - icon: at-symbol
-    url: 'mailto:your-email@example.com'
+    url: 'mailto:12132407@mail.sustech.edu.cn'
     label: E-mail Me
   - icon: brands/x
     url: https://twitter.com/GetResearchDev
   - icon: brands/instagram
     url: https://www.instagram.com/
   - icon: brands/github
-    url: https://github.com/gcushen
+    url: https://github.com/LIUjia1106
   - icon: brands/linkedin
     url: https://www.linkedin.com/
   - icon: academicons/google-scholar
@@ -54,8 +54,8 @@ interests:
 education:
   - area: PhD of Emerging Interdisciplinary Areas
     institution: Hong Kong University of Science and Technology
-    date_start: 2016-01-01
-    date_end: 2020-12-31
+    date_start: 2024-08-20
+    date_end: 2028-07-31
     summary: |
       Thesis on _Why LLMs are awesome_. Supervised by [Prof Joe Smith](https://example.com). Presented papers at 5 IEEE conferences with the contributions being published in 2 Springer journals.
     button:
