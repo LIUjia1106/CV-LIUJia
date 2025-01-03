@@ -31,25 +31,25 @@ organizations:
 # Need to use another icon? Simply download the SVG icon to your `assets/media/icons/` folder.
 profiles:
   - icon: at-symbol
-    url: 'mailto:12132407@mail.sustech.edu.cn'
+    url: 'mailto:jliugh@connect.ust.hk'
     label: E-mail Me
   - icon: brands/x
-    url: https://twitter.com/GetResearchDev
+    url: https://x.com/jia_liu00?s=21
   - icon: brands/instagram
-    url: https://www.instagram.com/
+    url: https://www.instagram.com/jialiu00
   - icon: brands/github
     url: https://github.com/LIUjia1106
   - icon: brands/linkedin
-    url: https://www.linkedin.com/
+    url: https://www.linkedin.com/in/jialiu00
   - icon: academicons/google-scholar
-    url: https://scholar.google.com/
+    url: https://scholar.google.com/citations?hl=en&user=FLE72QUAAAAJ
   - icon: academicons/orcid
-    url: https://orcid.org/
+    url: https://orcid.org/0000-0001-9171-4022
 
 interests:
-  - Artificial Intelligence
-  - Computational Linguistics
-  - Information Retrieval
+  - Multiscale Heat Transfer
+  - Coupling Electron-Phonon Boltzmann Equation
+  - Numerical Methods
 
 education:
   - area: PhD of Emerging Interdisciplinary Areas
