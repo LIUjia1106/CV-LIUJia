@@ -6,8 +6,8 @@ title: 刘佳
 name_pronunciation: Liu Jia
 
 # Full name (for SEO)
-first_name: Liu
-last_name: Jia
+first_name: Jia
+last_name: Liu
 
 # Status emoji
 status:
