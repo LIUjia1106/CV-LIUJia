@@ -1,0 +1,94 @@
+{{/* Custom block: Travel journal - one entry per destination, newest first.
+     Edit in `content/life.md` (block: travel-journal).
+
+     To add a destination:
+       1. Make a folder for its photos, e.g. `assets/media/life/kyoto/`, and drop the photos in.
+       2. Copy one `- name:` entry under `destinations:` and fill it in:
+            name:   place name (shown as the heading)
+            date:   free text, e.g. 'Apr 2025'
+            emoji:  one emoji for the stamp
+            text:   a few lines (Markdown OK)
+            photos: list of {image, caption}; `image` is relative to `assets/media/`,
+                    e.g. life/kyoto/temple.jpg. Leave image '' to show a placeholder tile.
+     Photos are cropped to 4:3 tiles; click one to see it full size. */}}
+{{ $page := .wcPage }}
+{{ $block := .wcBlock }}
+{{ $title := $block.content.title | emojify | $page.RenderString }}
+{{ $dests := $block.content.destinations | default slice }}
+
+<div class="jl-container">
+  <header class="jl-head">
+    <h2 class="jl-title">{{ $title }}</h2>
+    {{ with $block.content.text }}<p class="jl-subtitle jl-tagline">{{ . | emojify | $page.RenderString }}</p>{{ end }}
+  </header>
+
+  {{ if gt (len $dests) 1 }}
+  <nav class="jl-trip-index" aria-label="Destinations">
+    {{ range $i, $d := $dests }}
+      <a class="jl-chip" href="#trip-{{ $d.name | anchorize | default $i }}">{{ $d.emoji | default "📍" | emojify }} {{ $d.name | plainify }}</a>
+    {{ end }}
+  </nav>
+  {{ end }}
+
+  <ol class="jl-trips">
+    {{ range $i, $d := $dests }}
+    <li class="jl-trip" id="trip-{{ $d.name | anchorize | default $i }}">
+      <span class="jl-trip-stamp" aria-hidden="true">{{ $d.emoji | default "📍" | emojify }}</span>
+      <div class="jl-trip-body">
+        <header class="jl-trip-head">
+          <h3 class="jl-trip-name">{{ $d.name | emojify | $page.RenderString }}</h3>
+          {{ with $d.date }}<span class="jl-trip-date">{{ . }}</span>{{ end }}
+        </header>
+        {{ with $d.text }}<div class="jl-trip-text">{{ . | emojify | $page.RenderString }}</div>{{ end }}
+
+        {{ with $d.photos }}
+        <div class="jl-trip-photos">
+          {{ range . }}
+            {{ $img := "" }}
+            {{ with .image }}{{ $img = resources.Get (path.Join "media" .) }}{{ end }}
+            <figure class="jl-trip-photo">
+              {{ if $img }}
+                {{ $thumb := $img.Fill "800x600 Smart webp q80" }}
+                {{ $full := $img }}
+                {{ if gt $img.Width 2000 }}{{ $full = $img.Resize "2000x webp q85" }}{{ end }}
+                <a href="{{ $full.RelPermalink }}" class="jl-lightbox-link" data-caption="{{ .caption | plainify }}">
+                  <img src="{{ $thumb.RelPermalink }}" width="{{ $thumb.Width }}" height="{{ $thumb.Height }}" alt="{{ .caption | default $d.name | plainify }}" loading="lazy">
+                </a>
+              {{ else }}
+                <div class="jl-photo-placeholder jl-trip-placeholder" aria-hidden="true">
+                  {{ partial "functions/get_icon" (dict "name" "camera" "attributes" "class=\"jl-icon\"") }}
+                  <span>Add a photo</span>
+                </div>
+              {{ end }}
+              {{ with .caption }}<figcaption>{{ . | emojify | $page.RenderString }}</figcaption>{{ end }}
+            </figure>
+          {{ end }}
+        </div>
+        {{ end }}
+      </div>
+    </li>
+    {{ end }}
+  </ol>
+
+  {{ with $block.content.footer }}<p class="jl-trip-footer">{{ . | emojify | $page.RenderString }}</p>{{ end }}
+</div>
+
+<dialog class="jl-lightbox" aria-label="Photo">
+  <button type="button" class="jl-lightbox-close" aria-label="Close">×</button>
+  <img alt="">
+  <p class="jl-lightbox-caption"></p>
+</dialog>
+<script>
+(() => {
+  const box = document.currentScript.previousElementSibling;
+  if (!box || typeof box.showModal !== 'function') return;
+  const img = box.querySelector('img'), cap = box.querySelector('.jl-lightbox-caption');
+  document.querySelectorAll('.jl-lightbox-link').forEach(a => a.addEventListener('click', e => {
+    e.preventDefault();
+    img.src = a.href; img.alt = a.dataset.caption || '';
+    cap.textContent = a.dataset.caption || '';
+    box.showModal();
+  }));
+  box.addEventListener('click', e => { if (e.target === box || e.target.closest('.jl-lightbox-close')) box.close(); });
+})();
+</script>

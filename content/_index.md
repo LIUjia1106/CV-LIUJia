@@ -16,7 +16,7 @@ sections:
       text: ""
       button:
         text: Download CV
-        # TODO(Jia): replace static/uploads/resume.pdf with your latest CV (it is still the 2023 version)
+        # CV files: static/uploads/resume.pdf (English) and resume-zh.pdf (Chinese)
         url: uploads/resume.pdf
     design:
       css_class: dark jl-hero
@@ -159,18 +159,18 @@ sections:
     id: life
     content:
       title: Beyond the lab
-      text: Heat flows from hot to cold. I flow from the lab to the mountains.
+      text: Heat flows from hot to cold. I flow from the lab to the road.
       items:
-        - emoji: ⛰️
-          title: On the trail
-          # TODO(Jia): your favourite trail or mountain
-          text: Hiking is how I reset. Favourite so far - [trail / mountain].
-        - emoji: 📷
-          title: '[Hobby 2]'
-          text: '[A sentence about it]'
+        - emoji: 🌏
+          title: '[Travel](life/#travel)'
+          # TODO(Jia): your favourite trip
+          text: Mountain trails, new cities and the local food that comes with them. Favourite trip so far - [trip].
         - emoji: 🎵
-          title: '[Hobby 3]'
-          text: '[A sentence about it]'
+          title: '[Music](life/#music)'
+          text: '[What you listen to or play - artists, genres, a playlist]'
+        - emoji: ✍️
+          title: '[Notes](life/#notes)'
+          text: 'Reflections on Ph.D. life, research and the road. [First note coming soon]'
       button:
         text: More about life outside research
         url: life/

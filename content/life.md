@@ -7,41 +7,73 @@ design:
   spacing: '4rem'
 
 sections:
-  - block: beyond-lab
+  # ── Travel: one entry per destination, newest first ──
+  # To add a destination:
+  #   1. put its photos in a new folder, e.g. assets/media/life/kyoto/
+  #   2. copy a whole `- name:` entry below (down to its last photo) and fill it in
+  # Mix scenery and food photos freely; leave `image: ''` to show an "Add a photo" tile.
+  - block: travel-journal
+    id: travel
     content:
-      title: Life beyond the lab
-      text: Heat flows from hot to cold. I flow from the lab to the mountains.
-      # Cards: emoji, title, text, and optionally `image:` (a file in assets/media/)
+      title: Travel
+      text: Heat flows from hot to cold. I flow from the lab to the road.
+      destinations:
+        - name: '[Destination]'
+          date: '[Month Year]'
+          emoji: 🏔️
+          # TODO(Jia): where was this, and what was memorable (the hike, the view, the food)?
+          text: '[A few lines about the trip: the trail, the view, the best thing you ate.]'
+          photos:
+            - image: life/above-the-clouds.jpg
+              caption: '[Above the clouds · where?]'
+            - image: ''
+              caption: '[Scenery]'
+            - image: ''
+              caption: '[Food]'
+
+        - name: '[Next destination]'
+          date: '[Month Year]'
+          emoji: 🍜
+          text: '[A few lines about it.]'
+          photos:
+            - image: ''
+              caption: '[Scenery]'
+            - image: ''
+              caption: '[Food]'
+
+  # ── Music ──
+  - block: beyond-lab
+    id: music
+    content:
+      title: Music
+      # TODO(Jia): fill in, or delete any card you don't need
+      text: '[One line about music and you]'
       items:
-        - emoji: ⛰️
-          title: On the trail
-          # TODO(Jia): your favourite trails / mountains
-          text: Hiking is how I reset after a long week of debugging solvers. Favourite trails so far - [trail 1], [trail 2].
-        - emoji: 📷
-          title: '[Hobby 2]'
-          text: '[A sentence or two about it - what you love, how you got into it.]'
-        - emoji: 🎵
-          title: '[Hobby 3]'
-          text: '[A sentence or two about it.]'
-        - emoji: 🍜
-          title: Favourite food in Hong Kong
-          text: '[Your go-to dish or restaurant]'
-        - emoji: 📚
-          title: Currently reading
-          text: '[Book title - author]'
-        - emoji: 🌏
-          title: Places I've been
-          text: '[Cities / countries]'
-      # Photo wall: put images in assets/media/life/ and reference them below
-      photos:
-        - image: life/above-the-clouds.jpg
-          caption: '[Where was this taken?]'
-        - image: ''
-          caption: '[Caption]'
-        - image: ''
-          caption: '[Caption]'
-        - image: ''
-          caption: '[Caption]'
+        - emoji: 🎧
+          title: On repeat
+          text: '[Song - Artist]'
+        - emoji: 🎼
+          title: Favourite artists
+          text: '[Artists or genres you love]'
+        - emoji: 🎹
+          title: '[I play / A concert I loved]'
+          text: '[An instrument you play, or a live show that stayed with you]'
+      # Optional playlist player. Paste the embed URL from Spotify (Share > Embed playlist) or
+      # NetEase Cloud Music (生成外链播放器), e.g.
+      #   embed: https://open.spotify.com/embed/playlist/<ID>
+      #   embed: https://music.163.com/outchain/player?type=0&id=<ID>&auto=0&height=430
+      embed: ''
+      embed_height: 380
+
+  # ── Notes: diary-style reflections (content/post/) ──
+  # To write a note, copy content/post/note-template/ to a new folder and follow the steps inside.
+  - block: notes-list
+    id: notes
+    content:
+      title: Notes
+      text: Reflections on Ph.D. life, research and the road.
+      count: 3
+      placeholder: '[First note coming soon.]'
 
   - block: markdown
     content:

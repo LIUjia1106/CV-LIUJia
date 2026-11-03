@@ -1,7 +1,8 @@
 {{/* Custom block: Beyond the lab - hobby cards and (optional) photo tiles.
      Edit in `content/_index.md` or `content/life.md` (block: beyond-lab).
      Card fields: emoji, title, text, image (optional; a file inside `assets/media/`).
-     Photo tiles (`photos:`): image (file inside `assets/media/`), caption. Without an image a placeholder tile is shown. */}}
+     Photo tiles (`photos:`): image (file inside `assets/media/`), caption. Without an image a placeholder tile is shown.
+     Optional `embed:` an iframe URL (e.g. a Spotify or NetEase Cloud Music playlist player); `embed_height:` its height in px. */}}
 {{ $page := .wcPage }}
 {{ $block := .wcBlock }}
 {{ $title := $block.content.title | emojify | $page.RenderString }}
@@ -49,6 +50,13 @@
         {{ with .caption }}<figcaption>{{ . | emojify | $page.RenderString }}</figcaption>{{ end }}
       </figure>
     {{ end }}
+  </div>
+  {{ end }}
+
+  {{ with $block.content.embed }}
+  <div class="jl-embed">
+    <iframe src="{{ . }}" title="{{ $title | plainify }}" height="{{ $block.content.embed_height | default 380 }}" loading="lazy"
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" frameborder="0"></iframe>
   </div>
   {{ end }}
 

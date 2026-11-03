@@ -1,0 +1,39 @@
+{{/* Custom block: Notes - the latest posts from `content/post/`.
+     To write a note: copy `content/post/_note-template/` to e.g. `content/post/2026-first-note/`,
+     edit index.md, and delete the `draft: true` line when it's ready to go live.
+     Until the first note is published, `content.placeholder` is shown instead. */}}
+{{ $page := .wcPage }}
+{{ $block := .wcBlock }}
+{{ $title := $block.content.title | emojify | $page.RenderString }}
+{{ $count := $block.content.count | default 3 }}
+{{ $notes := where site.RegularPages "Section" "post" }}
+
+<div class="jl-container">
+  <header class="jl-head">
+    <h2 class="jl-title">{{ $title }}</h2>
+    {{ with $block.content.text }}<p class="jl-subtitle jl-tagline">{{ . | emojify | $page.RenderString }}</p>{{ end }}
+  </header>
+
+  {{ if $notes }}
+  <div class="jl-notes">
+    {{ range first $count $notes.ByDate.Reverse }}
+    <a class="jl-note" href="{{ .RelPermalink }}">
+      <time class="jl-note-date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2006" }}</time>
+      <h3 class="jl-note-title">{{ .Title }}</h3>
+      {{ with .Summary }}<p class="jl-note-text">{{ . | plainify | truncate 140 }}</p>{{ end }}
+    </a>
+    {{ end }}
+  </div>
+  {{ if gt (len $notes) $count }}
+  <div class="jl-center">
+    <a class="jl-btn jl-btn-ghost" href="{{ "post/" | relLangURL }}">All notes
+      {{ partial "functions/get_icon" (dict "name" "arrow-long-right" "attributes" "class=\"jl-icon-sm\" aria-hidden=\"true\"") }}</a>
+  </div>
+  {{ end }}
+  {{ else }}
+  <div class="jl-note jl-note-empty">
+    <span class="jl-life-emoji" aria-hidden="true">✍️</span>
+    <p class="jl-note-text">{{ $block.content.placeholder | default "First note coming soon." | emojify | $page.RenderString }}</p>
+  </div>
+  {{ end }}
+</div>

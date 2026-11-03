@@ -157,16 +157,16 @@ skills:
     color: '#eeac02'
     color_border: '#f0bf23'
     items:
-      - name: Hiking
-        description: 'Happiest above the treeline'
+      - name: Travel & hiking
+        description: 'Mountain trails, new cities and local food'
         icon: hb/person-simple-walk
-      # TODO(Jia): replace the two placeholders below with your real hobbies
-      - name: '[Hobby 2]'
-        description: '[One line about it]'
-        icon: camera
-      - name: '[Hobby 3]'
-        description: '[One line about it]'
+      # TODO(Jia): fill in your music taste
+      - name: Music
+        description: '[What you listen to or play]'
         icon: musical-note
+      - name: Writing
+        description: 'Notes on Ph.D. life, research and travel'
+        icon: pencil-square
 
 # Awards (newest first). `date_start` is used for sorting, `date` for display.
 awards:
@@ -203,6 +203,6 @@ I'm **Jia Liu (刘佳)**, a Ph.D. student at the Hong Kong University of Science
 
 Those equations are notoriously expensive to solve, especially when a single device mixes ballistic and diffusive transport. My work is about making them **fast and reliable**. I develop general synthetic iterative schemes (GSIS) that reach converged solutions in dozens of iterations instead of thousands, asymptotic-preserving methods that stay accurate on coarse meshes, and reduced-order models for parametric studies. I work with [Prof. Wei Su](https://weisu-mae.github.io/) and Prof. Yanguang Zhou; before HKUST I did my M.Sc. with Prof. Lei Wu at SUSTech.
 
-When I'm not iterating, I'm usually on a mountain trail. 🥾
+When I'm not iterating, I'm usually travelling: hiking a mountain trail or hunting down good local food. 🥾
 
-**I will finish my Ph.D. in mid-2028 and am open to postdoctoral opportunities.** [Let's talk](mailto:jliugh@connect.ust.hk).
+**I will finish my Ph.D. in mid-2028 and am open to postdoctoral opportunities.** [Let's talk](mailto:jliugh@connect.ust.hk). · [中文简历 (PDF)](/uploads/resume-zh.pdf)
