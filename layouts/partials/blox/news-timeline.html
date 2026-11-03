@@ -1,0 +1,36 @@
+{{/* Custom block: News timeline.
+     Edit the items in `content/_index.md` (block: news-timeline). Newest first.
+     `count` items are shown; the rest go behind a "Show earlier news" toggle. */}}
+{{ $page := .wcPage }}
+{{ $block := .wcBlock }}
+{{ $title := $block.content.title | emojify | $page.RenderString }}
+{{ $count := $block.content.count | default 5 }}
+{{ $items := $block.content.items }}
+
+<div class="jl-container jl-narrow">
+  <header class="jl-head">
+    <h2 class="jl-title">{{ $title }}</h2>
+  </header>
+
+  {{ define "partials/jl-news-item.html" }}
+  <li class="jl-news-item">
+    <span class="jl-news-dot" aria-hidden="true">{{ partial "functions/get_icon" (dict "name" (.item.icon | default "sparkles") "attributes" "class=\"jl-icon-sm\"") }}</span>
+    <div class="jl-news-body">
+      <time class="jl-news-date">{{ .item.date }}</time>
+      <div class="jl-news-text">{{ .item.text | emojify | .page.RenderString }}</div>
+    </div>
+  </li>
+  {{ end }}
+
+  <ol class="jl-timeline">
+    {{ range first $count $items }}{{ partial "jl-news-item.html" (dict "item" . "page" $page) }}{{ end }}
+  </ol>
+  {{ if gt (len $items) $count }}
+  <details class="jl-more">
+    <summary>Show earlier news</summary>
+    <ol class="jl-timeline jl-timeline-more">
+      {{ range after $count $items }}{{ partial "jl-news-item.html" (dict "item" . "page" $page) }}{{ end }}
+    </ol>
+  </details>
+  {{ end }}
+</div>

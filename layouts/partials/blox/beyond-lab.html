@@ -1,0 +1,61 @@
+{{/* Custom block: Beyond the lab - hobby cards and (optional) photo tiles.
+     Edit in `content/_index.md` or `content/life.md` (block: beyond-lab).
+     Card fields: emoji, title, text, image (optional; a file inside `assets/media/`).
+     Photo tiles (`photos:`): image (file inside `assets/media/`), caption. Without an image a placeholder tile is shown. */}}
+{{ $page := .wcPage }}
+{{ $block := .wcBlock }}
+{{ $title := $block.content.title | emojify | $page.RenderString }}
+
+<div class="jl-container">
+  <header class="jl-head">
+    <h2 class="jl-title">{{ $title }}</h2>
+    {{ with $block.content.text }}<p class="jl-subtitle jl-tagline">{{ . | emojify | $page.RenderString }}</p>{{ end }}
+  </header>
+
+  {{ with $block.content.items }}
+  <div class="jl-life-grid">
+    {{ range $i, $item := . }}
+    <article class="jl-life-card" style="--jl-i: {{ $i }}">
+      {{ $img := "" }}
+      {{ with $item.image }}{{ $img = resources.Get (path.Join "media" .) }}{{ end }}
+      {{ if $img }}
+        {{ $img = $img.Fill "640x400 Center webp" }}
+        <img class="jl-life-img" src="{{ $img.RelPermalink }}" width="{{ $img.Width }}" height="{{ $img.Height }}" alt="{{ $item.title | plainify }}" loading="lazy">
+      {{ else }}
+        <span class="jl-life-emoji" aria-hidden="true">{{ $item.emoji | default "✨" | emojify }}</span>
+      {{ end }}
+      <h3 class="jl-life-title">{{ $item.title | emojify | $page.RenderString }}</h3>
+      <p class="jl-life-text">{{ $item.text | emojify | $page.RenderString }}</p>
+    </article>
+    {{ end }}
+  </div>
+  {{ end }}
+
+  {{ with $block.content.photos }}
+  <div class="jl-photo-grid">
+    {{ range . }}
+      {{ $img := "" }}
+      {{ with .image }}{{ $img = resources.Get (path.Join "media" .) }}{{ end }}
+      <figure class="jl-photo">
+        {{ if $img }}
+          {{ $img = $img.Fill "800x800 Smart webp" }}
+          <img src="{{ $img.RelPermalink }}" width="{{ $img.Width }}" height="{{ $img.Height }}" alt="{{ .caption | plainify }}" loading="lazy">
+        {{ else }}
+          <div class="jl-photo-placeholder" aria-hidden="true">
+            {{ partial "functions/get_icon" (dict "name" "camera" "attributes" "class=\"jl-icon\"") }}
+            <span>Add a photo</span>
+          </div>
+        {{ end }}
+        {{ with .caption }}<figcaption>{{ . | emojify | $page.RenderString }}</figcaption>{{ end }}
+      </figure>
+    {{ end }}
+  </div>
+  {{ end }}
+
+  {{ with $block.content.button }}
+  <div class="jl-center">
+    <a class="jl-btn jl-btn-ghost" href="{{ .url | relLangURL }}">{{ .text }}
+      {{ partial "functions/get_icon" (dict "name" "arrow-long-right" "attributes" "class=\"jl-icon-sm\" aria-hidden=\"true\"") }}</a>
+  </div>
+  {{ end }}
+</div>

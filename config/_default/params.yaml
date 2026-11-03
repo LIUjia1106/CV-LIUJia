@@ -6,7 +6,10 @@
 # Appearance
 appearance:
   mode: system
-  color: emerald
+  # `ember` is a custom warm palette defined in `assets/css/themes/ember.css`
+  # (heat flows from hot to cold - so does this site's colour scheme).
+  # Any built-in palette also works: blue, cyan, emerald, green, indigo, purple, red, rose, sky, teal, zinc.
+  color: ember
 
 # SEO
 marketing:
@@ -14,8 +17,8 @@ marketing:
     site_type: Person
     local_business_type: ''
     org_name: ''
-    description: 'The highly-customizable Hugo Academic theme powered by Hugo Blox Builder. Easily create your personal academic website.'
-    twitter: 'GetResearchDev'
+    description: 'Jia Liu (刘佳) - Ph.D. student at HKUST developing fast, reliable numerical methods for multiscale heat transfer: phonon and electron–phonon Boltzmann transport, synthetic iterative schemes, and reduced-order modelling.'
+    twitter: 'jia_liu00'
   analytics:
     google_analytics: ''
     baidu_tongji: ''
@@ -35,12 +38,12 @@ header:
     show_search: true
     show_theme_chooser: true
     logo:
-      text: "LIU Jia"
+      text: "Jia Liu · 刘佳"
 
 # Site footer
 footer:
   copyright:
-    notice: '© {year} Me. This work is licensed under {license}'
+    notice: '© {year} Jia Liu. This work is licensed under {license}'
     license:
       enable: true
       allow_derivatives: false
@@ -49,7 +52,7 @@ footer:
 
 # Localization
 locale:
-  date_format: 'Jan 2, 2006'
+  date_format: 'Jan 2006'
   time_format: '3:04 PM'
 
 # Site features

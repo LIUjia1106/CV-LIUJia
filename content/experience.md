@@ -7,8 +7,8 @@ design:
   spacing: '5rem'
 
 # Note: `username` refers to the user's folder name in `content/authors/`
+# Edit your education, work, skills and awards in `content/authors/admin/_index.md`.
 
-# Page sections
 sections:
   - block: resume-experience
     content:
@@ -17,19 +17,18 @@ sections:
       # Hugo date format
       date_format: 'January 2006'
       # Education or Experience section first?
-      is_education_first: false
+      is_education_first: true
+  - block: resume-awards
+    content:
+      title: Honors & Awards
+      username: admin
+    design:
+      # Show the year only
+      date_format: '2006'
   - block: resume-skills
     content:
-      title: Skills & Hobbies
+      title: Skills & Interests
       username: admin
     design:
       show_skill_percentage: false
-  - block: resume-awards
-    content:
-      title: Awards
-      username: admin
-  - block: resume-languages
-    content:
-      title: Languages
-      username: admin
 ---

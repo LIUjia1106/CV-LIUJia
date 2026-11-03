@@ -1,0 +1,193 @@
+{{/* Custom block: Phonon playground - a toy Monte Carlo model of phonons between a hot and a cold wall.
+     Each phonon flies in a straight line, scatters after a random free path (mean = Kn × device size)
+     and then relaxes to the local temperature (relaxation-time / BGK-type scattering).
+     The walls re-emit phonons at their own temperatures. Pure JS + canvas, no dependencies. */}}
+{{ $page := .wcPage }}
+{{ $block := .wcBlock }}
+{{ $title := $block.content.title | emojify | $page.RenderString }}
+{{ $text := $block.content.text | emojify | $page.RenderString | safeHTML }}
+
+<div class="jl-container">
+  <header class="jl-head">
+    <h2 class="jl-title">{{ $title }}</h2>
+    {{ with $text }}<div class="jl-lead">{{ . }}</div>{{ end }}
+  </header>
+
+  <div class="jl-pg" id="jl-playground">
+    <div class="jl-pg-stage">
+      <span class="jl-pg-wall jl-pg-wall-hot">Hot</span>
+      <canvas class="jl-pg-canvas" role="img" aria-label="Animated phonons travelling between a hot wall on the left and a cold wall on the right"></canvas>
+      <span class="jl-pg-wall jl-pg-wall-cold">Cold</span>
+    </div>
+
+    <div class="jl-pg-row">
+      <div class="jl-pg-controls">
+        <label class="jl-pg-label" for="jl-kn">Knudsen number <output class="jl-pg-kn" for="jl-kn">Kn = 0.05</output></label>
+        <input class="jl-pg-range" id="jl-kn" type="range" min="0" max="100" step="1" value="25" aria-describedby="jl-regime">
+        <div class="jl-pg-scale" aria-hidden="true"><span>diffusive</span><span>transition</span><span>ballistic</span></div>
+        <p class="jl-pg-regime" id="jl-regime" aria-live="polite"></p>
+        <div class="jl-pg-buttons">
+          <button type="button" class="jl-btn jl-btn-small" data-pg="toggle">Pause</button>
+          <button type="button" class="jl-btn jl-btn-small jl-btn-ghost" data-pg="reset">Reset</button>
+        </div>
+      </div>
+      <figure class="jl-pg-chart">
+        <canvas class="jl-pg-profile" role="img" aria-label="Temperature profile between the hot and cold walls compared with Fourier's law"></canvas>
+        <figcaption>
+          <span class="jl-key jl-key-sim"></span> simulated temperature
+          <span class="jl-key jl-key-fourier"></span> Fourier's law
+          <span class="jl-key jl-key-ballistic"></span> ballistic limit
+        </figcaption>
+      </figure>
+    </div>
+
+    <p class="jl-pg-note">A toy Monte Carlo model for intuition, not one of my solvers. In the diffusive regime a conventional kinetic solver needs thousands of iterations to converge; the synthetic iterative schemes I work on get there in dozens.</p>
+  </div>
+</div>
+
+<script>
+(function () {
+  var root = document.getElementById('jl-playground');
+  if (!root) return;
+  var stage = root.querySelector('.jl-pg-canvas');
+  var chart = root.querySelector('.jl-pg-profile');
+  var range = root.querySelector('.jl-pg-range');
+  var knOut = root.querySelector('.jl-pg-kn');
+  var regimeOut = root.querySelector('.jl-pg-regime');
+  var toggleBtn = root.querySelector('[data-pg="toggle"]');
+  var resetBtn = root.querySelector('[data-pg="reset"]');
+  var sctx = stage.getContext('2d');
+  var cctx = chart.getContext('2d');
+
+  var N = 700, NB = 20, V = 0.006, H = 0.42; // particles, bins, speed per step, domain height (length = 1)
+  var KN_MIN = 0.02, KN_MAX = 5;
+  var px = new Float32Array(N), py = new Float32Array(N), ux = new Float32Array(N), uy = new Float32Array(N), pt = new Float32Array(N);
+  var binSum = new Float32Array(NB), binCnt = new Float32Array(NB), binT = new Float32Array(NB), prof = new Float32Array(NB);
+  var kn = 0.05, running = true, visible = true, raf = null, dpr = 1;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function knFromSlider(v) { return Math.pow(10, Math.log10(KN_MIN) + (v / 100) * (Math.log10(KN_MAX) - Math.log10(KN_MIN))); }
+  function isDark() { return document.documentElement.classList.contains('dark'); }
+
+  function randDir(i) { var a = Math.random() * 2 * Math.PI; ux[i] = Math.cos(a); uy[i] = Math.sin(a); }
+  // Diffuse (cosine-law) emission from a wall into the domain: sx = +1 from the left wall, -1 from the right wall
+  function wallDir(i, sx) { var s = Math.sqrt(Math.random()); var c = Math.sqrt(1 - s * s); ux[i] = sx * s; uy[i] = (Math.random() < 0.5 ? -1 : 1) * c; }
+
+  function reset() {
+    // Start from Fourier's linear profile: drag towards ballistic to watch it flatten and jump at the walls
+    for (var i = 0; i < N; i++) { px[i] = Math.random(); py[i] = Math.random() * H; randDir(i); pt[i] = 1 - px[i]; }
+    for (var b = 0; b < NB; b++) { prof[b] = 1 - (b + 0.5) / NB; binT[b] = prof[b]; }
+  }
+
+  function computeBins() {
+    binSum.fill(0); binCnt.fill(0);
+    for (var i = 0; i < N; i++) { var b = Math.min(NB - 1, Math.max(0, (px[i] * NB) | 0)); binSum[b] += pt[i]; binCnt[b] += 1; }
+    for (var b2 = 0; b2 < NB; b2++) { binT[b2] = binCnt[b2] > 0 ? binSum[b2] / binCnt[b2] : binT[b2]; }
+  }
+
+  function step() {
+    var pScatter = 1 - Math.exp(-V / kn);
+    computeBins();
+    for (var i = 0; i < N; i++) {
+      px[i] += V * ux[i]; py[i] += V * uy[i];
+      if (py[i] < 0) { py[i] = -py[i]; uy[i] = -uy[i]; } else if (py[i] > H) { py[i] = 2 * H - py[i]; uy[i] = -uy[i]; }
+      if (px[i] < 0) { px[i] = -px[i]; wallDir(i, 1); pt[i] = 1; continue; }
+      if (px[i] > 1) { px[i] = 2 - px[i]; wallDir(i, -1); pt[i] = 0; continue; }
+      if (Math.random() < pScatter) { randDir(i); var b = Math.min(NB - 1, (px[i] * NB) | 0); pt[i] = binT[b]; }
+    }
+  }
+
+  function heat(t, a) { // cold blue -> warm orange
+    var r = Math.round(59 + (249 - 59) * t), g = Math.round(130 + (115 - 130) * t), bl = Math.round(246 + (22 - 246) * t);
+    return 'rgba(' + r + ',' + g + ',' + bl + ',' + a + ')';
+  }
+
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    [stage, chart].forEach(function (c) {
+      var w = c.clientWidth, h = c.clientHeight;
+      c.width = Math.max(1, Math.round(w * dpr)); c.height = Math.max(1, Math.round(h * dpr));
+    });
+  }
+
+  function drawStage() {
+    var w = stage.width, h = stage.height, dark = isDark();
+    sctx.fillStyle = dark ? 'rgba(10,14,28,0.35)' : 'rgba(255,255,255,0.35)';
+    sctx.fillRect(0, 0, w, h);
+    var r = Math.max(1.6, 2.2 * dpr);
+    for (var i = 0; i < N; i++) {
+      sctx.beginPath();
+      sctx.fillStyle = heat(pt[i], 0.9);
+      sctx.arc(px[i] * w, (py[i] / H) * h, r, 0, 6.2832);
+      sctx.fill();
+    }
+  }
+
+  function drawChart() {
+    var w = chart.width, h = chart.height, dark = isDark();
+    var padL = 34 * dpr, padR = 10 * dpr, padT = 10 * dpr, padB = 22 * dpr;
+    var gw = w - padL - padR, gh = h - padT - padB;
+    cctx.clearRect(0, 0, w, h);
+    cctx.font = (11 * dpr) + 'px system-ui, sans-serif';
+    cctx.fillStyle = dark ? '#9ca3af' : '#4b5563';
+    cctx.strokeStyle = dark ? 'rgba(255,255,255,0.18)' : 'rgba(0,0,0,0.14)';
+    cctx.lineWidth = 1 * dpr;
+    cctx.beginPath(); cctx.moveTo(padL, padT); cctx.lineTo(padL, padT + gh); cctx.lineTo(padL + gw, padT + gh); cctx.stroke();
+    cctx.textAlign = 'right'; cctx.textBaseline = 'middle';
+    cctx.fillText('hot', padL - 6 * dpr, padT + 4 * dpr); cctx.fillText('cold', padL - 6 * dpr, padT + gh - 4 * dpr);
+    cctx.textAlign = 'center'; cctx.textBaseline = 'top';
+    cctx.fillText('position between the walls', padL + gw / 2, padT + gh + 6 * dpr);
+    function X(x) { return padL + x * gw; } function Y(t) { return padT + (1 - t) * gh; }
+    // Fourier's law (dashed) and ballistic limit (dotted)
+    cctx.setLineDash([6 * dpr, 5 * dpr]); cctx.strokeStyle = dark ? '#cbd5e1' : '#334155'; cctx.lineWidth = 1.5 * dpr;
+    cctx.beginPath(); cctx.moveTo(X(0), Y(1)); cctx.lineTo(X(1), Y(0)); cctx.stroke();
+    cctx.setLineDash([2 * dpr, 4 * dpr]); cctx.strokeStyle = dark ? '#60a5fa' : '#2563eb';
+    cctx.beginPath(); cctx.moveTo(X(0), Y(0.5)); cctx.lineTo(X(1), Y(0.5)); cctx.stroke();
+    cctx.setLineDash([]);
+    // Simulated profile
+    cctx.strokeStyle = dark ? '#fb923c' : '#c2410c'; cctx.lineWidth = 2.5 * dpr; cctx.beginPath();
+    for (var b = 0; b < NB; b++) { var x = (b + 0.5) / NB; if (b === 0) cctx.moveTo(X(x), Y(prof[b])); else cctx.lineTo(X(x), Y(prof[b])); }
+    cctx.stroke();
+  }
+
+  function regimeText(k) {
+    if (k < 0.1) return 'Diffusive: phonons scatter many times on the way, so Fourier’s law holds.';
+    if (k < 1) return 'Transition: neither Fourier’s law nor free flight works. This is the hard regime.';
+    return 'Ballistic: phonons fly wall to wall, and the temperature jumps at the boundaries.';
+  }
+
+  function setKn(v) {
+    kn = knFromSlider(+v);
+    knOut.textContent = 'Kn = ' + (kn < 0.1 ? kn.toFixed(3) : kn < 1 ? kn.toFixed(2) : kn.toFixed(1));
+    regimeOut.textContent = regimeText(kn);
+  }
+
+  function frame() {
+    raf = null;
+    if (!running || !visible) return;
+    var sub = Math.min(60, Math.max(1, Math.ceil(1.5 / kn)));
+    for (var s = 0; s < sub; s++) step();
+    var a = 0.035; for (var b = 0; b < NB; b++) prof[b] = prof[b] * (1 - a) + binT[b] * a;
+    drawStage(); drawChart();
+    raf = requestAnimationFrame(frame);
+  }
+  function start() { if (!raf && running && visible) raf = requestAnimationFrame(frame); }
+
+  range.addEventListener('input', function () { setKn(range.value); });
+  toggleBtn.addEventListener('click', function () {
+    running = !running; toggleBtn.textContent = running ? 'Pause' : 'Play';
+    if (running) start();
+  });
+  resetBtn.addEventListener('click', function () {
+    reset(); var w = stage.width, h = stage.height; sctx.clearRect(0, 0, w, h); drawStage(); drawChart();
+  });
+  window.addEventListener('resize', function () { resize(); drawStage(); drawChart(); });
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (es) { visible = es[0].isIntersecting; if (visible) start(); }).observe(root);
+  }
+
+  setKn(range.value); reset(); resize();
+  if (reduce) { running = false; toggleBtn.textContent = 'Play'; for (var k = 0; k < 400; k++) step(); for (var b = 0; b < NB; b++) prof[b] = binT[b]; }
+  drawStage(); drawChart(); start();
+})();
+</script>

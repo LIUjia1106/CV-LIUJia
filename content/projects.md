@@ -1,5 +1,5 @@
 ---
-title: 'Projects'
+title: 'Research Projects'
 date: 2024-05-19
 type: landing
 
@@ -11,13 +11,15 @@ design:
 sections:
   - block: collection
     content:
-      title: Selected Projects
-      text: I enjoy making things. Here are a selection of projects that I have worked on over the years.
+      title: Research Projects
+      text: Fast and reliable numerical methods for multiscale heat transfer, from phonon and electron transport to the experiments that measure them.
       filters:
         folders:
           - project
+      sort_by: 'Weight'
+      sort_ascending: true
     design:
       view: article-grid
-      fill_image: false
-      columns: 3
+      fill_image: true
+      columns: 2
 ---

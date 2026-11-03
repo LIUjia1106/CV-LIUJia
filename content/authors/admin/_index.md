@@ -1,17 +1,17 @@
 ---
 # Display name
-title: 刘佳
+title: Jia Liu
 
-# Name pronunciation (optional)
-name_pronunciation: Liu Jia
+# Name pronunciation (optional) - shown above the name
+name_pronunciation: 刘佳
 
 # Full name (for SEO)
 first_name: Jia
 last_name: Liu
 
-# Status emoji
+# Status emoji (shown on the avatar)
 status:
-  icon: ☕️
+  icon: 🌡️
 
 # Is this the primary user of the site?
 superuser: true
@@ -20,11 +20,11 @@ superuser: true
 highlight_name: true
 
 # Role/position/tagline
-role: Ph.D.
+role: Ph.D. Student · Multiscale Heat Transfer
 
 # Organizations/Affiliations to display in Biography blox
 organizations:
-  - name: HKUST
+  - name: EMIA, The Hong Kong University of Science and Technology
     url: https://hkust.edu.hk/
 
 # Social network links
@@ -33,154 +33,176 @@ profiles:
   - icon: at-symbol
     url: 'mailto:jliugh@connect.ust.hk'
     label: E-mail Me
-  - icon: brands/x
-    url: https://x.com/jia_liu00?s=21
-  - icon: brands/instagram
-    url: https://www.instagram.com/jialiu00
-  - icon: brands/github
-    url: https://github.com/LIUjia1106
-  - icon: brands/linkedin
-    url: https://www.linkedin.com/in/jialiu00
   - icon: academicons/google-scholar
-    url: https://scholar.google.com/citations?hl=en&user=FLE72QUAAAAJ
+    url: https://scholar.google.com/citations?user=FLE72QUAAAAJ
+    label: Google Scholar
   - icon: academicons/orcid
     url: https://orcid.org/0000-0001-9171-4022
+    label: ORCID
+  - icon: brands/github
+    url: https://github.com/LIUjia1106
+    label: GitHub
+  - icon: brands/linkedin
+    url: https://www.linkedin.com/in/jialiu00
+    label: LinkedIn
+  - icon: brands/x
+    url: https://x.com/jia_liu00
+    label: X
+  - icon: brands/instagram
+    url: https://www.instagram.com/jialiu00
+    label: Instagram
 
 interests:
-  - Multiscale Heat Transfer
-  - Coupling Electron-Phonon Boltzmann Equation
-  - Numerical Methods
+  - Multiscale heat transfer
+  - Phonon & electron–phonon Boltzmann transport
+  - Fast iterative & asymptotic-preserving solvers
+  - Reduced-order modelling
 
 education:
-  - area: PhD of Emerging Interdisciplinary Areas
-    institution: Hong Kong University of Science and Technology
-    date_start: 2024-08-15
-    date_end: 2028-07-01
+  - area: Ph.D., Individualized Interdisciplinary Program (EMIA)
+    institution: The Hong Kong University of Science and Technology
+    date_start: 2024-09-02
+    date_end: 2028-06-30
     summary: |
-      Thesis on _Why LLMs are awesome_. Supervised by [Prof Joe Smith](https://example.com). Presented papers at 5 IEEE conferences with the contributions being published in 2 Springer journals.
-    button:
-      text: 'Read Thesis'
-      url: 'https://example.com'
-  - area: Master of Mechanics and Aerospace Engineering 
-    institution: Southern University of Science and Technology
-    date_start: 2021-08-26
-    date_end: 2024-07-01
-    summary: |
-      GPA: 3.1/4.0
+      Expected June 2028. Advisors: [Prof. Wei Su](https://weisu-mae.github.io/) and Prof. Yanguang Zhou (co-advisor).
 
-      Courses included:
-      - lorem ipsum dolor sit amet, consectetur adipiscing elit
-      - lorem ipsum dolor sit amet, consectetur adipiscing elit
-      - lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - area: Bachelor of Mathematics and Computational Science
-    institution: Xiangtan University
-    date_start: 2017-08-31
-    date_end: 2021-06-10
+      Tentative dissertation: _General Synthetic Iterative Scheme and Proper Generalized Decomposition for Efficient Boltzmann Transport Solvers_.
+
+      CGA 3.80 / 4.30 · Selected coursework: Advanced Numerical Methods I (A+) & II (A), Mathematical Methods in Science and Engineering I (A−), Statistical Machine Learning (A−).
+  - area: M.Sc. in Mechanics
+    institution: Southern University of Science and Technology (SUSTech)
+    date_start: 2021-09-01
+    date_end: 2024-06-30
     summary: |
-      GPA: 3.7/4.0
-      
-      Courses included:
-      - lorem ipsum dolor sit amet, consectetur adipiscing elit
-      - lorem ipsum dolor sit amet, consectetur adipiscing elit
-      - lorem ipsum dolor sit amet, consectetur adipiscing elit
+      Advisor: Prof. Lei Wu. Thesis: _General Synthetic Iterative Scheme for Phonon Boltzmann Equation_ - awarded **SUSTech Outstanding Master's Thesis**.
+
+      University-level Outstanding Graduate (2024).
+  - area: B.Sc. in Information and Computational Science
+    institution: Xiangtan University
+    date_start: 2017-09-01
+    date_end: 2021-06-30
+    summary: |
+      GPA 3.69 / 4.0 · Ranked 3 / 116 · First Class Scholarship (four times).
+
 work:
-  - position: Director of Cloud Infrastructure
-    company_name: GenCoin
+  - position: Graduate Researcher
+    company_name: HKUST - Division of Emerging Interdisciplinary Areas
     company_url: ''
     company_logo: ''
-    date_start: 2021-01-01
+    date_start: 2024-09-02
     date_end: ''
     summary: |2-
-      Responsibilities include:
-      - lorem ipsum dolor sit amet, consectetur adipiscing elit
-      - lorem ipsum dolor sit amet, consectetur adipiscing elit
-      - lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - position: Backend Software Engineer
-    company_name: X
+      Fast solvers for multiscale phonon and electron transport, with Prof. Wei Su and Prof. Yanguang Zhou.
+      - General synthetic iterative scheme (GSIS) for the coupled electron–phonon Boltzmann equations
+      - Synthetic iterative scheme for the non-gray phonon BTE with dual relaxation times
+      - Proper generalized decomposition with synthetic preconditioning for parametric phonon transport
+  - position: Teaching Assistant
+    company_name: HKUST
     company_url: ''
     company_logo: ''
-    date_start: 2016-01-01
-    date_end: 2020-12-31
-    summary: |
-      Responsibilities include:
-      - Migrated infrastructure to a new data center
-      - lorem ipsum dolor sit amet, consectetur adipiscing elit
-      - lorem ipsum dolor sit amet, consectetur adipiscing elit
+    # TODO(Jia): replace with the real term of your first HKUST TA duty
+    date_start: 2024-09-02
+    date_end: ''
+    summary: |2-
+      Two courses during my Ph.D. study (class size: 30).
+  - position: Graduate Researcher
+    company_name: SUSTech - Department of Mechanics and Aerospace Engineering
+    company_url: ''
+    company_logo: ''
+    date_start: 2021-09-01
+    date_end: 2024-06-30
+    summary: |2-
+      Kinetic theory and multiscale heat transfer, with Prof. Lei Wu.
+      - Proposed a GSIS for the phonon Boltzmann equation with dual relaxation times - up to three orders of magnitude fewer iterations than the conventional scheme
+      - Developed a fast-converging, asymptotic-preserving method for simulating frequency-domain thermoreflectance (FDTR)
+      - SUSTech Climbing Plan (2022): acceleration algorithms and a high-performance solver for multiscale rarefied gas flows
+  - position: Teaching Assistant
+    company_name: SUSTech
+    company_url: ''
+    company_logo: ''
+    date_start: 2022-03-01
+    date_end: 2022-07-31
+    summary: |2-
+      2-credit postgraduate course, 62 students. Awarded **Outstanding Graduate Teaching Assistant**.
+  - position: Undergraduate Researcher
+    company_name: Xiangtan University
+    company_url: ''
+    company_logo: ''
+    date_start: 2019-01-01
+    date_end: 2019-12-31
+    summary: |2-
+      National College Students' Innovation and Entrepreneurship Training Program: kinetic Boltzmann models and numerical methods for magnetic-field fluidized bed problems.
 
 # Skills
-# Add your own SVG icons to `assets/media/icons/`
+# Icons: hero icons (e.g. `fire`), `devicon/<name>` or `hb/<name>`; or add your own SVG to `assets/media/icons/`.
 skills:
-  - name: Technical Skills
+  - name: Research toolkit
     items:
-      - name: Python
-        description: ''
-        percent: 80
-        icon: code-bracket
-      - name: Data Science
-        description: ''
-        percent: 100
-        icon: chart-bar
-      - name: SQL
-        description: ''
-        percent: 40
-        icon: circle-stack
-  - name: Hobbies
+      - name: Synthetic iterative acceleration (GSIS)
+        description: 'Fast convergence from ballistic to diffusive regimes'
+        icon: bolt
+      - name: Asymptotic-preserving schemes
+        description: 'Accurate on coarse meshes in the diffusive limit'
+        icon: variable
+      - name: Reduced-order modelling (PGD)
+        description: 'Fast parametric studies of phonon transport'
+        icon: squares-2x2
+      - name: C++ & Fortran
+        description: 'Developing, verifying and optimizing kinetic solvers'
+        icon: devicon/cplusplus
+      - name: MATLAB & LaTeX
+        description: 'Prototyping, post-processing and writing'
+        icon: devicon/matlab
+  - name: Off the clock
     color: '#eeac02'
     color_border: '#f0bf23'
     items:
       - name: Hiking
-        description: ''
-        percent: 60
-        icon: person-simple-walk
-      - name: Cats
-        description: ''
-        percent: 100
-        icon: cat
-      - name: Photography
-        description: ''
-        percent: 80
+        description: 'Happiest above the treeline'
+        icon: hb/person-simple-walk
+      # TODO(Jia): replace the two placeholders below with your real hobbies
+      - name: '[Hobby 2]'
+        description: '[One line about it]'
         icon: camera
+      - name: '[Hobby 3]'
+        description: '[One line about it]'
+        icon: musical-note
 
-languages:
-  - name: English
-    percent: 100
-  - name: Chinese
-    percent: 75
-  - name: Portuguese
-    percent: 25
-
-# Awards.
-#   Add/remove as many awards below as you like.
-#   Only `title`, `awarder`, and `date` are required.
-#   Begin multi-line `summary` with YAML's `|` or `|2-` multi-line prefix and indent 2 spaces below.
+# Awards (newest first). `date_start` is used for sorting, `date` for display.
 awards:
-  - title: Neural Networks and Deep Learning
-    url: https://www.coursera.org/learn/neural-networks-deep-learning
-    date: '2023-11-25'
-    awarder: Coursera
-    icon: coursera
+  - title: Outstanding Master's Thesis
+    awarder: Southern University of Science and Technology
+    date: '2024-06-30'
+    date_start: '2024-06-30'
     summary: |
-      I studied the foundational concept of neural networks and deep learning. By the end, I was familiar with the significant technological trends driving the rise of deep learning; build, train, and apply fully connected deep neural networks; implement efficient (vectorized) neural networks; identify key parameters in a neural network’s architecture; and apply deep learning to your own applications.
-  - title: Blockchain Fundamentals
-    url: https://www.edx.org/professional-certificate/uc-berkeleyx-blockchain-fundamentals
-    date: '2023-07-01'
-    awarder: edX
-    icon: edx
+      For the thesis _General Synthetic Iterative Scheme for Phonon Boltzmann Equation_.
+  - title: Outstanding Graduate (university level)
+    awarder: Southern University of Science and Technology
+    date: '2024-06-29'
+    date_start: '2024-06-29'
+    summary: ''
+  - title: Outstanding Graduate Teaching Assistant
+    awarder: Southern University of Science and Technology
+    date: '2022-07-31'
+    date_start: '2022-07-31'
+    summary: ''
+  - title: Second Prize (Hunan Division)
+    awarder: China Undergraduate Mathematical Contest in Modeling
+    date: '2019-12-01'
+    date_start: '2019-12-01'
+    summary: ''
+  - title: First Class Scholarship · Merit Student
+    awarder: Xiangtan University
+    date: '2021-06-01'
+    date_start: '2021-06-01'
     summary: |
-      Learned:
-      - Synthesize your own blockchain solutions
-      - Gain an in-depth understanding of the specific mechanics of Bitcoin
-      - Understand Bitcoin’s real-life applications and learn how to attack and destroy Bitcoin, Ethereum, smart contracts and Dapps, and alternatives to Bitcoin’s Proof-of-Work consensus algorithm
-  - title: 'Object-Oriented Programming in R'
-    url: https://www.datacamp.com/courses/object-oriented-programming-with-s3-and-r6-in-r
-    certificate_url: https://www.datacamp.com
-    date: '2023-01-21'
-    awarder: datacamp
-    icon: datacamp
-    summary: |
-      Object-oriented programming (OOP) lets you specify relationships between functions and the objects that they can act on, helping you manage complexity in your code. This is an intermediate level course, providing an introduction to OOP, using the S3 and R6 systems. S3 is a great day-to-day R programming tool that simplifies some of the functions that you write. R6 is especially useful for industry-specific analyses, working with web APIs, and building GUIs.
+      Top 5%, awarded four times each (2017–2021).
 ---
 
-## About Me
+I'm **Jia Liu (刘佳)**, a Ph.D. student at the Hong Kong University of Science and Technology. I study how heat moves when things get small or fast, down to the scale where Fourier's law breaks down. At that scale, heat is carried by phonons and electrons that have to be tracked with the Boltzmann transport equation.
 
-Chien Shiung Wu is a professor of artificial intelligence at the Stanford AI Lab. Her research interests include distributed robotics, mobile computing and programmable matter. She leads the Robotic Neurobiology group, which develops self-reconfiguring robots, systems of self-organizing robots, and mobile sensor networks.
+Those equations are notoriously expensive to solve, especially when a single device mixes ballistic and diffusive transport. My work is about making them **fast and reliable**. I develop general synthetic iterative schemes (GSIS) that reach converged solutions in dozens of iterations instead of thousands, asymptotic-preserving methods that stay accurate on coarse meshes, and reduced-order models for parametric studies. I work with [Prof. Wei Su](https://weisu-mae.github.io/) and Prof. Yanguang Zhou; before HKUST I did my M.Sc. with Prof. Lei Wu at SUSTech.
+
+When I'm not iterating, I'm usually on a mountain trail. 🥾
+
+**I will finish my Ph.D. in mid-2028 and am open to postdoctoral opportunities.** [Let's talk](mailto:jliugh@connect.ust.hk).

@@ -1,0 +1,41 @@
+{{/* Custom block: Research themes - a grid of research cards with linked papers.
+     Edit the content in `content/_index.md` (block: research-themes). */}}
+{{ $page := .wcPage }}
+{{ $block := .wcBlock }}
+{{ $title := $block.content.title | emojify | $page.RenderString }}
+{{ $text := $block.content.text | emojify | $page.RenderString | safeHTML }}
+
+<div class="jl-container">
+  <header class="jl-head">
+    <h2 class="jl-title">{{ $title }}</h2>
+    {{ with $block.content.subtitle }}<p class="jl-subtitle">{{ . | emojify | $page.RenderString }}</p>{{ end }}
+    {{ with $text }}<div class="jl-lead">{{ . }}</div>{{ end }}
+  </header>
+
+  <div class="jl-theme-grid">
+    {{ range $i, $item := $block.content.items }}
+    <article class="jl-theme-card" style="--jl-i: {{ $i }}">
+      <div class="jl-theme-top">
+        {{ with $item.icon }}<span class="jl-theme-icon" aria-hidden="true">{{ partial "functions/get_icon" (dict "name" . "attributes" "class=\"jl-icon\"") }}</span>{{ end }}
+        {{ with $item.kicker }}<span class="jl-kicker">{{ . }}</span>{{ end }}
+      </div>
+      <h3 class="jl-theme-title">
+        {{ if $item.url }}<a href="{{ $item.url | relLangURL }}">{{ $item.title | emojify }}</a>{{ else }}{{ $item.title | emojify }}{{ end }}
+      </h3>
+      <p class="jl-theme-text">{{ $item.text | emojify | $page.RenderString }}</p>
+      {{ with $item.papers }}
+      <ul class="jl-paper-chips" aria-label="Related papers">
+        {{ range . }}<li><a href="{{ .url | relLangURL }}">{{ .name }}</a></li>{{ end }}
+      </ul>
+      {{ end }}
+    </article>
+    {{ end }}
+  </div>
+
+  {{ with $block.content.button }}
+  <div class="jl-center">
+    <a class="jl-btn jl-btn-ghost" href="{{ .url | relLangURL }}">{{ .text }}
+      {{ partial "functions/get_icon" (dict "name" "arrow-long-right" "attributes" "class=\"jl-icon-sm\" aria-hidden=\"true\"") }}</a>
+  </div>
+  {{ end }}
+</div>
